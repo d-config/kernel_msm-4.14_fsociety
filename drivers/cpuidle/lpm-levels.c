@@ -651,6 +651,11 @@ static int cpu_power_select(struct cpuidle_device *dev,
 	uint32_t min_residency, max_residency;
 	struct power_params *pwr_params;
 
+	if (sleep_us <= 0)
+		sleep_us = S64_MAX;
+
+	next_wakeup_us = (uint32_t)sleep_us;
+
 	if (lpm_disallowed(sleep_us, dev->cpu, cpu))
 		goto done_select;
 
